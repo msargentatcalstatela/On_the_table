@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.widget.CompoundButton;
@@ -17,7 +18,6 @@ import android.widget.ToggleButton;
 import com.myesis.classifierandsensorservice.Constants;
 import com.myesis.classifierandsensorservice.DataSet;
 import com.myesis.classifierandsensorservice.LogisticPredictor;
-import com.myesis.classifierandsensorservice.Predictor;
 import com.myesis.classifierandsensorservice.SensorService;
 
 
@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
     private boolean mBound;
     private SensorService mBoundService;
     BroadcastReceiver receiver;
-    Predictor predictor;
+    LogisticPredictor predictor;
     FrameLayout table;
 
 
@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
             bindService(new Intent(MainActivity.this,
                     SensorService.class), mConnection, BIND_AUTO_CREATE);
             mBound = true;
+
 
         }
 
@@ -83,8 +84,8 @@ public class MainActivity extends Activity {
             }
         });
 
-        predictor = new LogisticPredictor(this, "test1.txt");
-
+        String tb = Environment.getExternalStorageDirectory() + "/my_classifier_files/6_tb1/tb1.txt";
+        predictor = new LogisticPredictor(this, tb, 1);
 
         table = (FrameLayout)findViewById(R.id.tframe);
 
@@ -106,7 +107,7 @@ public class MainActivity extends Activity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            DataSet data = (DataSet) intent.getSerializableExtra(Constants.DATA);
+           DataSet data = (DataSet) intent.getSerializableExtra(Constants.DATA);
 
             boolean inCategory = predictor.predict(data);
 

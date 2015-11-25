@@ -1,1 +1,0 @@
-{"category": "ontable", "name": "test1", "intercept": "-41.5960545302", "params": [0.3959583780815345, -0.3354989373524721, 4.343041053149257, -0.15180268432135688, 1.1648250748003495, -3.075109265928841], "sensors": ["accelerationX", "accelerationY", "accelerationZ", "gyroX", "gyroY", "gyroZ"], "method": "log_reg", "accuracy": 0.92643805309734517}
